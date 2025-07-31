@@ -27,6 +27,8 @@ declare module "@elegant-router/types" {
     "demo": "/demo";
     "demo_demo": "/demo/demo";
     "demo_tree": "/demo/tree";
+    "docker": "/docker";
+    "docker_volume": "/docker/volume";
     "home": "/home";
     "iframe-page": "/iframe-page/:url";
     "login": "/login/:module(pwd-login|code-login|register|reset-pwd|bind-wechat)?";
@@ -35,6 +37,8 @@ declare module "@elegant-router/types" {
     "monitor_logininfor": "/monitor/logininfor";
     "monitor_online": "/monitor/online";
     "monitor_operlog": "/monitor/operlog";
+    "saga": "/saga";
+    "saga_operate-log": "/saga/operate-log";
     "social-callback": "/social-callback";
     "system": "/system";
     "system_client": "/system/client";
@@ -92,10 +96,12 @@ declare module "@elegant-router/types" {
     | "404"
     | "500"
     | "demo"
+    | "docker"
     | "home"
     | "iframe-page"
     | "login"
     | "monitor"
+    | "saga"
     | "social-callback"
     | "system"
     | "tool"
@@ -126,11 +132,13 @@ declare module "@elegant-router/types" {
     | "user-center"
     | "demo_demo"
     | "demo_tree"
+    | "docker_volume"
     | "home"
     | "monitor_cache"
     | "monitor_logininfor"
     | "monitor_online"
     | "monitor_operlog"
+    | "saga_operate-log"
     | "system_client"
     | "system_config"
     | "system_dept"

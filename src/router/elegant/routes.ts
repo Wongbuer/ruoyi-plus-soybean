@@ -69,6 +69,26 @@ export const generatedRoutes: GeneratedRoute[] = [
     ]
   },
   {
+    name: 'docker',
+    path: '/docker',
+    component: 'layout.base',
+    meta: {
+      title: 'docker',
+      i18nKey: 'route.docker'
+    },
+    children: [
+      {
+        name: 'docker_volume',
+        path: '/docker/volume',
+        component: 'view.docker_volume',
+        meta: {
+          title: 'docker_volume',
+          i18nKey: 'route.docker_volume'
+        }
+      }
+    ]
+  },
+  {
     name: 'home',
     path: '/home',
     component: 'layout.base$view.home',
@@ -147,6 +167,26 @@ export const generatedRoutes: GeneratedRoute[] = [
         meta: {
           title: 'monitor_operlog',
           i18nKey: 'route.monitor_operlog'
+        }
+      }
+    ]
+  },
+  {
+    name: 'saga',
+    path: '/saga',
+    component: 'layout.base',
+    meta: {
+      title: 'saga',
+      i18nKey: 'route.saga'
+    },
+    children: [
+      {
+        name: 'saga_operate-log',
+        path: '/saga/operate-log',
+        component: 'view.saga_operate-log',
+        meta: {
+          title: 'saga_operate-log',
+          i18nKey: 'route.saga_operate-log'
         }
       }
     ]
