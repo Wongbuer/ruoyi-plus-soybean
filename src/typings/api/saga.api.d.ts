@@ -1,9 +1,9 @@
 /**
- * namespace Saga
+ * namespace Api.Saga
  *
  * backend api module: "Saga"
  */
-declare namespace Saga {
+declare namespace Api.Saga {
   import CommonRecord = Api.Common.CommonRecord;
   /** operate log */
   type OperateLog = CommonRecord<{
@@ -23,13 +23,13 @@ declare namespace Saga {
 
   /** operate log search params */
   type OperateLogSearchParams = CommonType.RecordNullable<
-    Pick<Saga.OperateLog, 'sagaName'> & Api.Common.CommonSearchParams
+    Pick<Api.Saga.OperateLog, 'sagaName'> & Api.Common.CommonSearchParams
   >;
 
   /** operate log operate params */
   type OperateLogOperateParams = CommonType.RecordNullable<
     Pick<
-      Saga.OperateLog,
+      Api.Saga.OperateLog,
       'sagaOperateId' | 'sagaName' | 'sagaStatus' | 'currentStepName' | 'sagaContextJson' | 'errorDetails'
     >
   >;

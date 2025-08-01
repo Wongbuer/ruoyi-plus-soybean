@@ -8,6 +8,13 @@ export function fetchGetVolumeList(params?: Api.Docker.VolumeSearchParams) {
     params
   });
 }
+/** 获取用户数据卷详细信息 */
+export function fetchGetVolumeDetail(volumeName: string) {
+  return request<Api.Docker.Volume>({
+    url: `/docker/volume/${volumeName}`,
+    method: 'get'
+  });
+}
 
 /** 新增用户数据卷信息 */
 export function fetchCreateVolume(data: Api.Docker.VolumeOperateParams) {

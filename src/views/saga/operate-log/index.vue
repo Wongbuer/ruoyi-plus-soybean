@@ -1,10 +1,12 @@
 <script setup lang="tsx">
-import { NDivider } from 'naive-ui';
+import { NDivider, NEllipsis } from 'naive-ui';
 import { fetchBatchDeleteOperateLog, fetchGetOperateLogList } from '@/service/api/saga/operateLog';
 import { useAppStore } from '@/store/modules/app';
 import { useAuth } from '@/hooks/business/auth';
 import { useDownload } from '@/hooks/business/download';
 import { useTable, useTableOperate } from '@/hooks/common/table';
+import { useDict } from '@/hooks/business/dict';
+import DictTag from '@/components/custom/dict-tag.vue';
 import { $t } from '@/locales';
 import ButtonIcon from '@/components/custom/button-icon.vue';
 import OperateLogOperateDrawer from './modules/operate-log-operate-drawer.vue';
@@ -13,6 +15,8 @@ import OperateLogSearch from './modules/operate-log-search.vue';
 defineOptions({
   name: 'OperateLogList'
 });
+
+useDict('saga_execute_status');
 
 const appStore = useAppStore();
 const { download } = useDownload();
@@ -54,37 +58,79 @@ const {
       key: 'sagaOperateId',
       title: 'saga操作ID',
       align: 'center',
-      minWidth: 120
+      minWidth: 120,
+      render: row => (
+        <NEllipsis tooltip={{ placement: 'bottom' }} style={{ maxWidth: '120px' }}>
+          {row.sagaOperateId}
+        </NEllipsis>
+      )
     },
     {
       key: 'sagaName',
       title: 'saga名称',
       align: 'center',
-      minWidth: 120
+      minWidth: 120,
+      render: row => (
+        <NEllipsis tooltip={{ placement: 'bottom' }} style={{ maxWidth: '120px' }}>
+          {row.sagaName}
+        </NEllipsis>
+      )
     },
     {
       key: 'sagaStatus',
       title: 'saga状态',
       align: 'center',
-      minWidth: 120
+      minWidth: 120,
+      render(row) {
+        return <DictTag size="small" value={row.sagaStatus} dictCode="saga_execute_status" />;
+      }
     },
     {
       key: 'currentStepName',
       title: '当前步骤名称',
       align: 'center',
-      minWidth: 120
+      minWidth: 120,
+      render: row => (
+        <NEllipsis tooltip={{ placement: 'bottom' }} style={{ maxWidth: '120px' }}>
+          {row.currentStepName}
+        </NEllipsis>
+      )
     },
     {
       key: 'sagaContextJson',
       title: 'saga上下文json',
       align: 'center',
-      minWidth: 120
+      minWidth: 120,
+      render: row => (
+        <NEllipsis
+          tooltip={{
+            placement: 'bottom',
+            width: 400
+          }}
+          style={{ maxWidth: '120px' }}
+          class="context-tooltip"
+        >
+          {row.sagaContextJson}
+        </NEllipsis>
+      )
     },
     {
       key: 'errorDetails',
       title: '错误详情',
       align: 'center',
-      minWidth: 120
+      minWidth: 120,
+      render: row => (
+        <NEllipsis
+          tooltip={{
+            placement: 'bottom',
+            width: 400
+          }}
+          style={{ maxWidth: '120px' }}
+          class="error-tooltip"
+        >
+          {row.errorDetails}
+        </NEllipsis>
+      )
     },
     {
       key: 'operate',
@@ -209,4 +255,17 @@ function handleExport() {
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+/* 针对tooltip内容的样式优化 */
+:global(.n-popover__content) {
+  word-break: break-all;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+}
+
+:global(.n-tooltip__content) {
+  word-break: break-all;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+}
+</style>

@@ -233,7 +233,11 @@ const local: App.I18n.Schema = {
     exception: '异常页',
     exception_403: '403',
     exception_404: '404',
-    exception_500: '500'
+    exception_500: '500',
+    docker: '数据卷管理',
+    docker_volume: '用户数据卷信息',
+    saga: 'Saga 分布式事务',
+    'saga_operate-log': 'Saga 操作日志'
   },
   menu: {
     system_tenant: '租户管理',
@@ -1131,6 +1135,36 @@ const local: App.I18n.Schema = {
         exportTemplate: '导出模板',
         importSuccess: '导入成功',
         statusChangeSuccess: '状态修改成功'
+      }
+    },
+    docker: {
+      volume: {
+        detailTitle: '数据卷详情',
+        name: '数据卷名称',
+        driver: '驱动类型',
+        createTime: '创建时间',
+        mountpoint: '挂载点',
+        labels: '标签',
+        options: '选项',
+        quotaRule: '配额规则',
+        labelsEnum: {
+          volumeTypeEnum: '数据卷类型',
+          userId: '用户ID',
+          username: '用户名',
+          zfsDataset: 'ZFS数据集',
+          isBuiltIn: '是否内置'
+        },
+        optionsEnum: {
+          device: '设备',
+          o: 'O',
+          type: '类型'
+        },
+        quotaRuleEnum: {
+          zfsPool: 'ZFS存储池',
+          volumeType: '数据卷类型',
+          quota: '配额',
+          priority: '优先级'
+        }
       }
     }
   },

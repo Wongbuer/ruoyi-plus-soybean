@@ -10,6 +10,13 @@ declare namespace Api {
       name: string;
       driver: string;
       createTime: string;
+      mountpoint?: string;
+      options?: Record<string, any>;
+      quotaRule?: {
+        enabled: boolean;
+        size: number;
+        [key: string]: any;
+      };
       labels: {
         volumeTypeEnum: string;
         userId: string;

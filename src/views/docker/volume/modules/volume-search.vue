@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue';
 import { useNaiveForm } from '@/hooks/common/form';
 import { $t } from '@/locales';
 
@@ -15,7 +14,6 @@ interface Emits {
 const emit = defineEmits<Emits>();
 
 const { formRef, validate, restoreValidation } = useNaiveForm();
-
 
 const model = defineModel<Api.Docker.VolumeSearchParams>('model', { required: true });
 

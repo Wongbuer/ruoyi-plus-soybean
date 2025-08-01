@@ -1,8 +1,8 @@
 import { request } from '@/service/request';
 
 /** 获取Saga 操作日志列表 */
-export function fetchGetOperateLogList(params?: Saga.OperateLogSearchParams) {
-  return request<Saga.OperateLogList>({
+export function fetchGetOperateLogList(params?: Api.Saga.OperateLogSearchParams) {
+  return request<Api.Saga.OperateLogList>({
     url: '/saga/operateLog/list',
     method: 'get',
     params
@@ -10,7 +10,7 @@ export function fetchGetOperateLogList(params?: Saga.OperateLogSearchParams) {
 }
 
 /** 新增Saga 操作日志 */
-export function fetchCreateOperateLog(data: Saga.OperateLogOperateParams) {
+export function fetchCreateOperateLog(data: Api.Saga.OperateLogOperateParams) {
   return request<boolean>({
     url: '/saga/operateLog',
     method: 'post',
@@ -19,7 +19,7 @@ export function fetchCreateOperateLog(data: Saga.OperateLogOperateParams) {
 }
 
 /** 修改Saga 操作日志 */
-export function fetchUpdateOperateLog(data: Saga.OperateLogOperateParams) {
+export function fetchUpdateOperateLog(data: Api.Saga.OperateLogOperateParams) {
   return request<boolean>({
     url: '/saga/operateLog',
     method: 'put',

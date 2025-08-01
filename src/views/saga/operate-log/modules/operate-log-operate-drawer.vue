@@ -52,14 +52,13 @@ function createDefaultModel(): Model {
   };
 }
 
-type RuleKey = Extract<keyof Model, 'sagaOperateId' | 'sagaName' | 'sagaStatus' | 'currentStepName' | 'createTime'>;
+type RuleKey = Extract<keyof Model, 'sagaOperateId' | 'sagaName' | 'sagaStatus' | 'currentStepName'>;
 
 const rules: Record<RuleKey, App.Global.FormRule> = {
   sagaOperateId: createRequiredRule('saga操作ID不能为空'),
   sagaName: createRequiredRule('saga名称不能为空'),
   sagaStatus: createRequiredRule('saga状态不能为空'),
-  currentStepName: createRequiredRule('当前步骤名称不能为空'),
-  createTime: createRequiredRule('创建时间不能为空')
+  currentStepName: createRequiredRule('当前步骤名称不能为空')
 };
 
 function handleUpdateModelWhenEdit() {

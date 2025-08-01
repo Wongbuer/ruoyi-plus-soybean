@@ -230,6 +230,10 @@ const local: App.I18n.Schema = {
     demo: 'Demo',
     demo_demo: 'Demo Table',
     demo_tree: 'Demo Tree',
+    docker: 'Volume Management',
+    docker_volume: 'User Volume Info',
+    saga: 'Saga Distributed Transaction',
+    'saga_operate-log': 'Saga Operation Log',
     exception: 'Exception',
     exception_403: '403',
     exception_404: '404',
@@ -1133,6 +1137,36 @@ const local: App.I18n.Schema = {
         exportTemplate: 'Export Template',
         importSuccess: 'Import successful',
         statusChangeSuccess: 'Status modified successfully'
+      }
+    },
+    docker: {
+      volume: {
+        detailTitle: 'Volume Details',
+        name: 'Volume Name',
+        driver: 'Driver Type',
+        createTime: 'Create Time',
+        mountpoint: 'Mount Point',
+        labels: 'Labels',
+        options: 'Options',
+        quotaRule: 'Quota Rule',
+        labelsEnum: {
+          volumeTypeEnum: 'Volume Type',
+          userId: 'User ID',
+          username: 'Username',
+          zfsDataset: 'ZFS Dataset',
+          isBuiltIn: 'Is Built-in'
+        },
+        optionsEnum: {
+          device: 'Device',
+          o: 'O',
+          type: 'Type'
+        },
+        quotaRuleEnum: {
+          zfsPool: 'ZFS Pool',
+          volumeType: 'Volume Type',
+          quota: 'Quota',
+          priority: 'Priority'
+        }
       }
     }
   },

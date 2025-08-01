@@ -1,4 +1,6 @@
 <script setup lang="tsx">
+import { ref } from 'vue';
+import { NEllipsis, NTag } from 'naive-ui';
 import { useBoolean } from '@sa/hooks';
 import { fetchBatchDeleteVolume, fetchGetVolumeList } from '@/service/api/docker/volume';
 import { useAppStore } from '@/store/modules/app';
@@ -8,6 +10,7 @@ import { useTable, useTableOperate } from '@/hooks/common/table';
 import { $t } from '@/locales';
 import ButtonIcon from '@/components/custom/button-icon.vue';
 import VolumeSearch from './modules/volume-search.vue';
+import VolumeDetailDrawer from './modules/volume-detail-drawer.vue';
 
 defineOptions({
   name: 'VolumeList'
@@ -18,6 +21,13 @@ const { download } = useDownload();
 const { hasAuth } = useAuth();
 
 const { bool: isRefreshing, setTrue: startRefreshing, setFalse: endRefreshing } = useBoolean(false);
+const { bool: drawerVisible, setTrue: openDrawer } = useBoolean(false);
+const editingData = ref<string | null>(null);
+
+function handleEdit(name: string) {
+  editingData.value = name;
+  openDrawer();
+}
 
 async function getVolumeTableData(p: Api.Docker.VolumeSearchParams) {
   startRefreshing();
@@ -25,10 +35,32 @@ async function getVolumeTableData(p: Api.Docker.VolumeSearchParams) {
   endRefreshing();
 
   if (error) {
-    return Promise.resolve({ data: { rows: [], total: 0 } });
+    return Promise.resolve({
+      data: {
+        rows: [],
+        total: 0,
+        pageNum: 1,
+        pageSize: 10
+      },
+      error: null,
+      response: undefined
+    });
   }
 
-  let filteredData = fetchedData || [];
+  if (!fetchedData) {
+    return Promise.resolve({
+      data: {
+        rows: [],
+        total: 0,
+        pageNum: 1,
+        pageSize: 10
+      },
+      error: null,
+      response: undefined
+    });
+  }
+
+  let filteredData = fetchedData;
   if (p.name) {
     filteredData = filteredData.filter(v => v.name.includes(p.name!));
   }
@@ -36,7 +68,8 @@ async function getVolumeTableData(p: Api.Docker.VolumeSearchParams) {
     filteredData = filteredData.filter(v => v.labels.username.includes(p.username!));
   }
 
-  const { pageNum = 1, pageSize = 10 } = p;
+  const pageNum = p.pageNum ?? 1;
+  const pageSize = p.pageSize ?? 10;
   const start = (pageNum - 1) * pageSize;
   const end = start + pageSize;
   const paginatedData = filteredData.slice(start, end);
@@ -44,8 +77,12 @@ async function getVolumeTableData(p: Api.Docker.VolumeSearchParams) {
   return Promise.resolve({
     data: {
       rows: paginatedData,
-      total: filteredData.length
-    }
+      total: filteredData.length,
+      pageNum,
+      pageSize
+    },
+    error: null,
+    response: undefined
   });
 }
 
@@ -60,13 +97,15 @@ const {
   searchParams,
   resetSearchParams
 } = useTable({
+  // @ts-expect-error - Custom table data function type mismatch
   apiFn: getVolumeTableData,
   apiParams: {
     pageNum: 1,
     pageSize: 10,
-    name: null,
-    username: null,
-    params: {}
+    params: {
+      name: null,
+      username: null
+    }
   },
   columns: () => [
     {
@@ -84,7 +123,12 @@ const {
       key: 'name',
       title: '数据卷名称',
       align: 'center',
-      minWidth: 120
+      minWidth: 120,
+      render: row => (
+        <NEllipsis tooltip={{ placement: 'bottom' }} style={{ maxWidth: '120px' }}>
+          {row.name}
+        </NEllipsis>
+      )
     },
     {
       key: 'username',
@@ -104,7 +148,18 @@ const {
       title: '数据卷类型',
       align: 'center',
       minWidth: 120,
-      render: row => row.labels.volumeTypeEnum
+      render: row => <NTag type="primary">{row.labels.volumeTypeEnum}</NTag>
+    },
+    {
+      key: 'mountpoint',
+      title: '挂载点',
+      align: 'center',
+      minWidth: 120,
+      render: row => (
+        <NEllipsis tooltip={{ placement: 'bottom' }} style={{ maxWidth: '120px' }}>
+          {row.mountpoint}
+        </NEllipsis>
+      )
     },
     {
       key: 'createTime',
@@ -118,6 +173,18 @@ const {
       align: 'center',
       width: 130,
       render: row => {
+        const detailBtn = () => {
+          return (
+            <ButtonIcon
+              text
+              type="primary"
+              icon="gg:details-more"
+              tooltipContent="详情"
+              onClick={() => handleEdit(row.name)}
+            />
+          );
+        };
+
         const deleteBtn = () => {
           if (!hasAuth('docker:volume:remove')) {
             return null;
@@ -134,7 +201,12 @@ const {
           );
         };
 
-        return <div class="flex-center gap-8px">{deleteBtn()}</div>;
+        return (
+          <div class="flex-center gap-8px">
+            {detailBtn()}
+            {deleteBtn()}
+          </div>
+        );
       }
     }
   ]
@@ -180,7 +252,7 @@ function handleExport() {
       </template>
       <NDataTable
         v-model:checked-row-keys="checkedRowKeys"
-        :columns="columns"
+        :columns="columns as any"
         :data="data"
         size="small"
         :flex-height="!appStore.isMobile"
@@ -192,6 +264,7 @@ function handleExport() {
         class="sm:h-full"
       />
     </NCard>
+    <VolumeDetailDrawer v-model:visible="drawerVisible" :volume-name="editingData" />
   </div>
 </template>
 

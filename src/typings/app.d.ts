@@ -953,6 +953,36 @@ declare namespace App {
             statusChangeSuccess: string;
           };
         };
+        docker: {
+          volume: {
+            detailTitle: string;
+            name: string;
+            driver: string;
+            createTime: string;
+            mountpoint: string;
+            labels: string;
+            options: string;
+            quotaRule: string;
+            labelsEnum: {
+              volumeTypeEnum: string;
+              userId: string;
+              username: string;
+              zfsDataset: string;
+              isBuiltIn: string;
+            };
+            optionsEnum: {
+              device: string;
+              o: string;
+              type: string;
+            };
+            quotaRuleEnum: {
+              zfsPool: string;
+              volumeType: string;
+              quota: string;
+              priority: string;
+            };
+          };
+        };
       };
       form: {
         required: string;

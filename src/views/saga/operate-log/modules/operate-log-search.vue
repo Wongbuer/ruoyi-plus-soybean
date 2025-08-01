@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue';
 import { useNaiveForm } from '@/hooks/common/form';
 import { $t } from '@/locales';
 
@@ -16,9 +15,7 @@ const emit = defineEmits<Emits>();
 
 const { formRef, validate, restoreValidation } = useNaiveForm();
 
-
 const model = defineModel<Api.Saga.OperateLogSearchParams>('model', { required: true });
-
 
 async function reset() {
   Object.assign(model.value.params!, {});
