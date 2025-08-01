@@ -11,6 +11,7 @@ import { $t } from '@/locales';
 import ButtonIcon from '@/components/custom/button-icon.vue';
 import VolumeSearch from './modules/volume-search.vue';
 import VolumeDetailDrawer from './modules/volume-detail-drawer.vue';
+import VolumeOperateDrawer from './modules/volume-operate-drawer.vue';
 
 defineOptions({
   name: 'VolumeList'
@@ -22,11 +23,20 @@ const { hasAuth } = useAuth();
 
 const { bool: isRefreshing, setTrue: startRefreshing, setFalse: endRefreshing } = useBoolean(false);
 const { bool: drawerVisible, setTrue: openDrawer } = useBoolean(false);
+const { bool: operateDrawerVisible, setTrue: openOperateDrawer, setFalse: closeOperateDrawer } = useBoolean(false);
 const editingData = ref<string | null>(null);
+const operateType = ref<NaiveUI.TableOperateType>('add');
+const editingRowData = ref<Api.Docker.Volume | null>(null);
 
 function handleEdit(name: string) {
   editingData.value = name;
   openDrawer();
+}
+
+function handleAdd() {
+  operateType.value = 'add';
+  editingRowData.value = null;
+  openOperateDrawer();
 }
 
 async function getVolumeTableData(p: Api.Docker.VolumeSearchParams) {
@@ -120,8 +130,15 @@ const {
       width: 64
     },
     {
+      key: 'alias',
+      title: $t('page.docker.volume.labelsEnum.alias'),
+      align: 'center',
+      minWidth: 120,
+      render: row => row.labels.alias || '-'
+    },
+    {
       key: 'name',
-      title: '数据卷名称',
+      title: $t('page.docker.volume.name'),
       align: 'center',
       minWidth: 120,
       render: row => (
@@ -132,27 +149,27 @@ const {
     },
     {
       key: 'username',
-      title: '所属用户',
+      title: $t('page.docker.volume.labelsEnum.username'),
       align: 'center',
       minWidth: 120,
       render: row => row.labels.username
     },
     {
       key: 'driver',
-      title: '驱动类型',
+      title: $t('page.docker.volume.driver'),
       align: 'center',
       minWidth: 120
     },
     {
       key: 'volumeType',
-      title: '数据卷类型',
+      title: $t('page.docker.volume.labelsEnum.volumeTypeEnum'),
       align: 'center',
       minWidth: 120,
       render: row => <NTag type="primary">{row.labels.volumeTypeEnum}</NTag>
     },
     {
       key: 'mountpoint',
-      title: '挂载点',
+      title: $t('page.docker.volume.mountpoint'),
       align: 'center',
       minWidth: 120,
       render: row => (
@@ -163,7 +180,7 @@ const {
     },
     {
       key: 'createTime',
-      title: '创建时间',
+      title: $t('page.docker.volume.createTime'),
       align: 'center',
       minWidth: 120
     },
@@ -214,6 +231,11 @@ const {
 
 const { checkedRowKeys, onBatchDeleted, onDeleted } = useTableOperate(data, getData);
 
+function handleOperateSubmitted() {
+  closeOperateDrawer();
+  getData();
+}
+
 async function handleBatchDelete() {
   // request
   const { error } = await fetchBatchDeleteVolume(checkedRowKeys.value);
@@ -236,15 +258,16 @@ function handleExport() {
 <template>
   <div class="min-h-500px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto">
     <VolumeSearch v-model:model="searchParams" @reset="resetSearchParams" @search="getDataByPage" />
-    <NCard title="用户数据卷信息列表" :bordered="false" size="small" class="card-wrapper sm:flex-1-hidden">
+    <NCard :title="$t('page.docker.volume.title')" :bordered="false" size="small" class="card-wrapper sm:flex-1-hidden">
       <template #header-extra>
         <TableHeaderOperation
           v-model:columns="columnChecks"
           :disabled-delete="checkedRowKeys.length === 0"
           :loading="loading || isRefreshing"
-          :show-add="false"
+          :show-add="hasAuth('docker:volume:add')"
           :show-delete="hasAuth('docker:volume:remove')"
           :show-export="hasAuth('docker:volume:export')"
+          @add="handleAdd"
           @delete="handleBatchDelete"
           @export="handleExport"
           @refresh="getData"
@@ -265,6 +288,12 @@ function handleExport() {
       />
     </NCard>
     <VolumeDetailDrawer v-model:visible="drawerVisible" :volume-name="editingData" />
+    <VolumeOperateDrawer
+      v-model:visible="operateDrawerVisible"
+      :operate-type="operateType"
+      :row-data="editingRowData"
+      @submitted="handleOperateSubmitted"
+    />
   </div>
 </template>
 

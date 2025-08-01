@@ -34,7 +34,7 @@ function getTagColor(
   value: string | boolean
 ): 'primary' | 'info' | 'success' | 'warning' | 'error' | 'default' {
   // 用户相关信息 - 蓝色
-  if (key === 'userId' || key === 'username') {
+  if (key === 'userId' || key === 'username' || key === 'alias') {
     return 'primary';
   }
 
@@ -112,6 +112,9 @@ watch(
             </NDescriptionsItem>
             <NDescriptionsItem :label="t('page.docker.volume.mountpoint')" :span="2">
               {{ volumeDetail.mountpoint }}
+            </NDescriptionsItem>
+            <NDescriptionsItem :label="t('page.docker.volume.labelsEnum.alias')" :span="2">
+              {{ volumeDetail.labels.alias || '-' }}
             </NDescriptionsItem>
           </NDescriptions>
           <NCard :title="t('page.docker.volume.labels')" size="small">

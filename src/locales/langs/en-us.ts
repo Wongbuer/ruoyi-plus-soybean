@@ -1141,6 +1141,7 @@ const local: App.I18n.Schema = {
     },
     docker: {
       volume: {
+        title: 'User Volume Information List',
         detailTitle: 'Volume Details',
         name: 'Volume Name',
         driver: 'Driver Type',
@@ -1154,7 +1155,8 @@ const local: App.I18n.Schema = {
           userId: 'User ID',
           username: 'Username',
           zfsDataset: 'ZFS Dataset',
-          isBuiltIn: 'Is Built-in'
+          isBuiltIn: 'Is Built-in',
+          alias: 'Volume Alias'
         },
         optionsEnum: {
           device: 'Device',

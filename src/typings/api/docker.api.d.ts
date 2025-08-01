@@ -23,6 +23,7 @@ declare namespace Api {
         username: string;
         zfsDataset: string;
         isBuiltIn: boolean;
+        alias: string;
       };
     };
 
@@ -32,11 +33,15 @@ declare namespace Api {
     >;
 
     /** volume operate params */
-    type VolumeOperateParams = CommonType.RecordNullable<
-      Pick<Volume, 'name'> & {
-        // Add other fields needed for create/update if known
-      }
-    >;
+    type VolumeOperateParams = CommonType.RecordNullable<{
+      alias: string;
+      name?: string;
+      driver?: string;
+      createTime?: string;
+      userId: string;
+      volumeType: string;
+      isBuiltin: boolean;
+    }>;
 
     /** volume list */
     type VolumeList = Volume[];

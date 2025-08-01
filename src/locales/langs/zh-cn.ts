@@ -1139,6 +1139,7 @@ const local: App.I18n.Schema = {
     },
     docker: {
       volume: {
+        title: '用户数据卷信息列表',
         detailTitle: '数据卷详情',
         name: '数据卷名称',
         driver: '驱动类型',
@@ -1152,7 +1153,8 @@ const local: App.I18n.Schema = {
           userId: '用户ID',
           username: '用户名',
           zfsDataset: 'ZFS数据集',
-          isBuiltIn: '是否内置'
+          isBuiltIn: '是否内置',
+          alias: '数据卷别称'
         },
         optionsEnum: {
           device: '设备',

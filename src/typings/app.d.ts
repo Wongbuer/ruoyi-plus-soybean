@@ -955,6 +955,7 @@ declare namespace App {
         };
         docker: {
           volume: {
+            title: string;
             detailTitle: string;
             name: string;
             driver: string;
@@ -969,6 +970,7 @@ declare namespace App {
               username: string;
               zfsDataset: string;
               isBuiltIn: string;
+              alias: string;
             };
             optionsEnum: {
               device: string;
