@@ -29,7 +29,7 @@ declare namespace Api {
 
     /** volume search params */
     type VolumeSearchParams = CommonType.RecordNullable<
-      Pick<Volume, 'name'> & { username?: string } & Api.Common.CommonSearchParams
+      Pick<Volume, 'name'> & { alias?: string; username?: string } & Api.Common.CommonSearchParams
     >;
 
     /** volume operate params */

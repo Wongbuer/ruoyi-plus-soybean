@@ -71,6 +71,9 @@ async function getVolumeTableData(p: Api.Docker.VolumeSearchParams) {
   }
 
   let filteredData = fetchedData;
+  if (p.alias) {
+    filteredData = filteredData.filter(v => v.labels.alias && v.labels.alias.includes(p.alias!));
+  }
   if (p.name) {
     filteredData = filteredData.filter(v => v.name.includes(p.name!));
   }
@@ -113,6 +116,7 @@ const {
     pageNum: 1,
     pageSize: 10,
     params: {
+      alias: null,
       name: null,
       username: null
     }
