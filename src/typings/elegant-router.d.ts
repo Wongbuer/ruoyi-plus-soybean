@@ -29,6 +29,7 @@ declare module "@elegant-router/types" {
     "demo_tree": "/demo/tree";
     "docker": "/docker";
     "docker_volume": "/docker/volume";
+    "docker_volume-record": "/docker/volume-record";
     "home": "/home";
     "iframe-page": "/iframe-page/:url";
     "login": "/login/:module(pwd-login|code-login|register|reset-pwd|bind-wechat)?";
@@ -132,6 +133,7 @@ declare module "@elegant-router/types" {
     | "user-center"
     | "demo_demo"
     | "demo_tree"
+    | "docker_volume-record"
     | "docker_volume"
     | "home"
     | "monitor_cache"

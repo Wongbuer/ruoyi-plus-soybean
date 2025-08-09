@@ -985,6 +985,15 @@ declare namespace App {
               priority: string;
             };
           };
+          volumeRecord: {
+            title: string;
+            id: string;
+            volumeName: string;
+            zfsDataset: string;
+            driver: string;
+            labels: string;
+            options: string;
+          };
         };
       };
       form: {

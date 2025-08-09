@@ -175,6 +175,7 @@ const routeMap: RouteMap = {
   "demo_tree": "/demo/tree",
   "docker": "/docker",
   "docker_volume": "/docker/volume",
+  "docker_volume-record": "/docker/volume-record",
   "home": "/home",
   "iframe-page": "/iframe-page/:url",
   "login": "/login/:module(pwd-login|code-login|register|reset-pwd|bind-wechat)?",

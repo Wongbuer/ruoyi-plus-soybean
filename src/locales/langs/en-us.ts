@@ -235,6 +235,7 @@ const local: App.I18n.Schema = {
     docker_volume: 'User Volume Info',
     saga: 'Saga Distributed Transaction',
     'saga_operate-log': 'Saga Operation Log',
+    'docker_volume-record': 'Volume Recycle Bin',
     exception: 'Exception',
     exception_403: '403',
     exception_404: '404',
@@ -1170,6 +1171,15 @@ const local: App.I18n.Schema = {
           quota: 'Quota',
           priority: 'Priority'
         }
+      },
+      volumeRecord: {
+        title: 'Volume Recycle Bin',
+        id: 'ID',
+        volumeName: 'Volume Name',
+        zfsDataset: 'ZFS Dataset Path',
+        driver: 'Volume Driver',
+        labels: 'Original Labels',
+        options: 'Original Options'
       }
     }
   },

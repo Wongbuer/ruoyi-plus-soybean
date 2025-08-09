@@ -45,5 +45,35 @@ declare namespace Api {
 
     /** volume list */
     type VolumeList = Volume[];
+    /** volume record */
+    type VolumeRecord = Common.CommonRecord<{
+      /** 主键ID */
+      id: CommonType.IdType;
+      /** 原始Docker Volume名称 */
+      volumeName: string;
+      /** 关联的ZFS数据集路径 */
+      zfsDataset: string;
+      /** Volume驱动 */
+      driver: string;
+      /** 原始标签(JSON格式)，用于恢复 */
+      labels: string;
+      /** 原始选项(JSON格式)，用于恢复 */
+      options: string;
+      /** 备注 */
+      remark: string;
+    }>;
+
+    /** volume record search params */
+    type VolumeRecordSearchParams = CommonType.RecordNullable<
+      Pick<Api.Docker.VolumeRecord, 'volumeName'> & Api.Common.CommonSearchParams
+    >;
+
+    /** volume record operate params */
+    type VolumeRecordOperateParams = CommonType.RecordNullable<
+      Pick<Api.Docker.VolumeRecord, 'id' | 'volumeName' | 'zfsDataset' | 'driver' | 'labels' | 'options' | 'remark'>
+    >;
+
+    /** volume record list */
+    type VolumeRecordList = Api.Common.PaginatingQueryRecord<VolumeRecord>;
   }
 }

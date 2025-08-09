@@ -85,6 +85,15 @@ export const generatedRoutes: GeneratedRoute[] = [
           title: 'docker_volume',
           i18nKey: 'route.docker_volume'
         }
+      },
+      {
+        name: 'docker_volume-record',
+        path: '/docker/volume-record',
+        component: 'view.docker_volume-record',
+        meta: {
+          title: 'docker_volume-record',
+          i18nKey: 'route.docker_volume-record'
+        }
       }
     ]
   },

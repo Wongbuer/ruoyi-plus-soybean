@@ -238,7 +238,8 @@ const local: App.I18n.Schema = {
     docker: '数据卷管理',
     docker_volume: '用户数据卷信息',
     saga: 'Saga 分布式事务',
-    'saga_operate-log': 'Saga 操作日志'
+    'saga_operate-log': 'Saga 操作日志',
+    'docker_volume-record': '数据卷回收站'
   },
   menu: {
     system_tenant: '租户管理',
@@ -1168,6 +1169,15 @@ const local: App.I18n.Schema = {
           quota: '配额',
           priority: '优先级'
         }
+      },
+      volumeRecord: {
+        title: '数据卷回收站',
+        id: '主键ID',
+        volumeName: '数据卷名称',
+        zfsDataset: 'ZFS数据集路径',
+        driver: 'Volume驱动',
+        labels: '原始标签',
+        options: '原始选项'
       }
     }
   },
